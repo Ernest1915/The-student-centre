@@ -19,7 +19,6 @@ export async function createUserAccount(user: INewUser) {
       accountId: newAccount.$id,
       name: newAccount.name,
       email: newAccount.email,
-      username: user.username,
       imageUrl: avatarUrl,
     });
 
@@ -34,7 +33,6 @@ export async function saveUserToDB(user: {
   accountId: string;
   email: string;
   name: string;
-  username?: string;
   imageUrl: string;
 }) {
   try {
@@ -106,7 +104,6 @@ export async function getAllDocuments() {
 }
 
 export async function updateUserInfo(user: {
-  username: string;
   email: string;
   password?: string;
 }) {
@@ -121,7 +118,6 @@ export async function updateUserInfo(user: {
       appwriteConfig.userCollectionId,
       currentAccount.$id,
       {
-        username: user.username,
         email: user.email,
         password: user.password, // Ensure this is securely handled
       }
@@ -130,7 +126,6 @@ export async function updateUserInfo(user: {
     const updatedUser = {
       id: currentAccount.$id,
       name: currentAccount.name,
-      username: updatedUserDocument.username,
       email: updatedUserDocument.email,
       imageUrl: updatedUserDocument.imageUrl || "",
       bio: updatedUserDocument.bio || "",

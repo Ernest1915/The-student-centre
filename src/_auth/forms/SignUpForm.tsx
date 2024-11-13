@@ -37,7 +37,6 @@ const SignUpForm = () => {
     resolver: zodResolver(SignUpValidation),
     defaultValues: {
       name: "",
-      username: "",
       email: "",
       password: "",
     },
@@ -90,20 +89,6 @@ const SignUpForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input type="text" className="shad-input" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
                 <FormControl>
                   <Input type="text" className="shad-input" {...field} />
                 </FormControl>

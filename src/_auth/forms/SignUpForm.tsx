@@ -20,7 +20,7 @@ import {
   useSignInAccount,
 } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
-import Loader from "@/components/ui/shared/Loader";
+import Loader from "@/components/shared/Loader";
 
 const SignUpForm = () => {
   const { toast } = useToast();
@@ -46,9 +46,13 @@ const SignUpForm = () => {
     const newUser = await createUserAccount(values);
 
     if (!newUser) {
-      return toast({
-        title: "Sign-Up failed. Please try again.",
-      });
+      try {
+        return toast({
+          title: "Sign-Up failed. Please try again.",
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     const session = await signInAccount({

@@ -275,6 +275,12 @@
     @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-dark-2;
   }
 
+  .newsidebar {
+    @apply hidden md:flex px-4 py-6 flex-col justify-between min-w-[200px];
+    background-color: rgba(24, 24, 24, 0.8);
+    height: 100%;
+  }
+
   .leftsidebar-link {
     @apply rounded-lg base-medium hover:bg-primary-500 transition;
   }

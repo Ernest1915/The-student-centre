@@ -16,10 +16,10 @@ export async function createUserAccount(user: INewUser) {
     const avatarUrl = avatars.getInitials(user.name);
 
     const newUser = await saveUserToDB({
-      accountId: newAccount.$id,
+      account_id: newAccount.$id,
       name: newAccount.name,
       email: newAccount.email,
-      imageUrl: avatarUrl,
+      image_url: avatarUrl,
     });
 
     return newUser;
@@ -30,17 +30,17 @@ export async function createUserAccount(user: INewUser) {
 }
 
 export async function saveUserToDB(user: {
-  accountId: string;
+  account_id: string;
   email: string;
   name: string;
-  imageUrl: string;
+  image_url: string;
 }) {
   try {
     const newUser = await databases.createDocument(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
       ID.unique(),
-      { ...user, balance: 0 }
+      { ...user }
     );
 
     return newUser;
@@ -68,7 +68,7 @@ export async function getCurrentUser() {
     const currentUser = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
-      [Query.equal("accountId", currentAccount.$id)]
+      [Query.equal("account_id", currentAccount.$id)]
     );
 
     if (!currentUser) throw Error;
@@ -86,54 +86,5 @@ export async function SignOutAccount() {
     return session;
   } catch (error) {
     console.log(error);
-  }
-}
-
-export async function getAllDocuments() {
-  try {
-    const documents = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.packagesCollectionId
-    );
-
-    return documents.documents;
-  } catch (error) {
-    console.error("Error");
-    return [];
-  }
-}
-
-export async function updateUserInfo(user: {
-  email: string;
-  password?: string;
-}) {
-  try {
-    const currentAccount = await account.get();
-    console.log(currentAccount);
-
-    if (!currentAccount) throw new Error("User not logged in");
-
-    const updatedUserDocument = await databases.updateDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.userCollectionId,
-      currentAccount.$id,
-      {
-        email: user.email,
-        password: user.password, // Ensure this is securely handled
-      }
-    );
-
-    const updatedUser = {
-      id: currentAccount.$id,
-      name: currentAccount.name,
-      email: updatedUserDocument.email,
-      imageUrl: updatedUserDocument.imageUrl || "",
-      bio: updatedUserDocument.bio || "",
-    };
-
-    return updatedUser;
-  } catch (error) {
-    console.error("Error updating user info: ", error);
-    return null;
   }
 }

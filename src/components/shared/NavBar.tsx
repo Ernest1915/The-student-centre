@@ -3,7 +3,6 @@ import {
   MdHome,
   MdHotel,
   MdRestaurant,
-  MdSearch,
   MdLogout,
   MdMenu,
 } from "react-icons/md";
@@ -15,7 +14,9 @@ const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="newsidebar bg-blue-500 fixed top-0 left-0 h-full md:w-20 lg:w-60">
+    <nav className="newsidebar">
+      {" "}
+      {/* Do not change the sizing of the sidebar */}
       {/* Toggle button for mobile */}
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -23,7 +24,6 @@ const NavBar = () => {
       >
         <MdMenu size={30} />
       </button>
-
       {/* Sidebar content */}
       <div
         className={`flex flex-col items-center justify-between h-full transition-transform duration-300 ${
@@ -42,24 +42,11 @@ const NavBar = () => {
         {/* Main section icons */}
         <div className="flex flex-col gap-4 flex-1 items-center mt-8">
           <ul className="flex flex-col gap-4">
-            <Icon
-              icon={MdHome}
-              to="/profile_a"
-              currentPath={location.pathname}
-            />
-            <Icon
-              icon={MdHotel}
-              to="/team_a"
-              currentPath={location.pathname}
-            />
+            <Icon icon={MdHome} to="/" currentPath={location.pathname} />
+            <Icon icon={MdHotel} to="/hotel" currentPath={location.pathname} />
             <Icon
               icon={MdRestaurant}
-              to="/cart_a"
-              currentPath={location.pathname}
-            />
-            <Icon
-              icon={MdSearch}
-              to="/chat_a"
+              to="/restaurant"
               currentPath={location.pathname}
             />
           </ul>
@@ -87,8 +74,8 @@ const Icon = ({
     <Link
       to={to}
       className={`${
-        currentPath === to ? "text-blue-300" : "text-gray-400"
-      } hover:text-blue-500 transition-colors duration-300`}
+        currentPath === to ? "text-blue-500" : "text-gray-400"
+      } hover:text-blue-300 transition-colors duration-300`}
     >
       <IconComponent size={30} />
     </Link>

@@ -39,6 +39,13 @@ export type IHeader = {
   className?: string;
 };
 
+export type IUniversity = {
+  id: string;
+  name: string;
+  img: string;
+  description: string;
+};
+
 export type ICell = {
   value: React.ReactNode;
   className?: string;
@@ -58,9 +65,3 @@ export type IDataRow = {
 
 export type IRow = ICell[];
 export type IData = IRow[];
-export interface University {
-  id: number;
-  name: string;
-  logo: string;
-  description: string;
-}// New interface for university

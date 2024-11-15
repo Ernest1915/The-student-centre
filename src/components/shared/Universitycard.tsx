@@ -1,17 +1,29 @@
-// src/components/UniversityCard.tsx
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { IUniversity } from "@/types";
 import React from "react";
-import { University } from "";
 
 interface UniversityCardProps {
-  university: University;
+  university: IUniversity;
 }
 
-const UniversityCard: React.FC<UniversityCardProps> = ({ university }) => (
-  <div className="university-card">
-    <img src={university.logo} alt={`${university.name} logo`} />
-    <h2>{university.name}</h2>
-    <p>{university.description}</p>
-  </div>
-);
+const Universitycard: React.FC<UniversityCardProps> = ({ university }) => {
+  return (
+    <Card className="m-5 w-[70vw] lg:w-[70vw] bg-[rgba(24,24,24,0.6)] p-6 rounded-lg shadow-lg">
+      <img
+        src={university.img}
+        alt={university.name}
+        className="h-40 w-full object-cover rounded-t-md"
+      />
 
-export default UniversityCard;
+      <CardHeader>
+        <CardTitle className="text-xl font-bold">{university.name}</CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <p className="text-sm text-white">{university.description}</p>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default Universitycard;

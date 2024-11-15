@@ -58,3 +58,9 @@ export type IDataRow = {
 
 export type IRow = ICell[];
 export type IData = IRow[];
+export interface University {
+  id: number;
+  name: string;
+  logo: string;
+  description: string;
+}// New interface for university

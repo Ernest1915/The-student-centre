@@ -9,7 +9,7 @@ import LoginForm from "./_auth/forms/LoginForm.tsx";
 import SignUpForm from "./_auth/forms/SignUpForm.tsx";
 import RootLayout from "./_root/RootLayout.tsx";
 
-import { Home, Hotel, Restaurant } from "./_root/pages";
+import { Home, Hostel, Restaurant } from "./_root/pages";
 
 const App = () => {
   return (
@@ -24,7 +24,7 @@ const App = () => {
         {/* private routes */}
         <Route element={<RootLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/hotel" element={<Hotel />} />
+          <Route path="/hostel" element={<Hostel />} />
           <Route path="/restaurant" element={<Restaurant />} />
         </Route>
       </Routes>

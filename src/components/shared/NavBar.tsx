@@ -43,7 +43,7 @@ const NavBar = () => {
         <div className="flex flex-col gap-4 flex-1 items-center mt-8">
           <ul className="flex flex-col gap-4">
             <Icon icon={MdHome} to="/" currentPath={location.pathname} />
-            <Icon icon={MdHotel} to="/hotel" currentPath={location.pathname} />
+            <Icon icon={MdHotel} to="/hostel" currentPath={location.pathname} />
             <Icon
               icon={MdRestaurant}
               to="/restaurant"

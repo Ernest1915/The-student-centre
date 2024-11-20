@@ -1,3 +1,3 @@
 export { default as Home } from "./Home";
-export { default as Hotel } from "./Hotel";
+export { default as Hostel } from "./Hostel";
 export { default as Restaurant } from "./Restaurant";

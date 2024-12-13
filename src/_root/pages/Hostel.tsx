@@ -4,22 +4,22 @@ import TopSellers from "@/components/shared/TopSellers";
 
 const Hostel = () => {
   return (
-    <div className="flex flex-col w-full h-full bg-primary-500">
-      <div className="p-6">
+    <div className="flex flex-col w-full h-full bg-white">
+      <div className="p-6 flex justify-center">
         <Search />
       </div>
+      <div className="flex flex-row w-full">
+        <div className="w-2/3 flex flex-col h-full mb-3">
+          <div className="flex-grow-[2] flex-shrink-0 flex-basis-2/3 bg-gray-100 p-6 rounded-lg shadow-lg m-3">
+            Hello
+          </div>
 
-      <div className="w-full flex flex-row h-1/3 mb-3">
-        <div className="w-2/3 bg-[rgba(24,24,24,0.6)] p-6 rounded-lg shadow-lg ml-6">
-          Hello
+          <div className="flex-grow-[1] flex-shrink-0 flex-basis-1/3 bg-gray-100 p-6 rounded-lg shadow-lg m-3">
+            <HostelCard />
+          </div>
         </div>
-        <div className="bg-[rgba(24,24,24,0.6)] p-6 rounded-lg shadow-lg ml-6 w-1/3 mr-3"></div>
-      </div>
-      <div className="w-full flex flex-row">
-        <div className="w-2/3 bg-[rgba(24,24,24,0.6)] p-6 rounded-lg shadow-lg ml-6">
-          <HostelCard />
-        </div>
-        <div className="ml-6">
+
+        <div className="m-3">
           <TopSellers />
         </div>
       </div>

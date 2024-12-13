@@ -21,11 +21,11 @@ const HostelCard = () => {
   ];
 
   return (
-    <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
+    <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-2">
       {hostels.map((htl, index) => (
         <Card
           key={index}
-          className="bg-[rgba(24,24,24,0.6)] p-4 rounded-lg shadow-lg text-gray-100"
+          className="bg-blue-500 p-4 rounded-lg shadow-lg text-gray-100"
         >
           <CardHeader className="flex flex-col items-start">
             <CardTitle className="text-sm font-semibold">{htl.name}</CardTitle>

@@ -14,49 +14,41 @@ const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="newsidebar">
-      {" "}
-      {/* Do not change the sizing of the sidebar */}
-      {/* Toggle button for mobile */}
+    <nav className="newnavbar text-white flex items-center justify-between px-6 py-4 shadow-md">
+      {/* Logo */}
+      <Link to="/" className="flex items-center">
+        <img src="/assets/icons/logo.svg" alt="logo" width={120} height={36} />
+      </Link>
+
+      {/* Mobile Menu Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="absolute top-4 left-4 text-white md:hidden"
+        className="text-white md:hidden"
       >
         <MdMenu size={30} />
       </button>
-      {/* Sidebar content */}
-      <div
-        className={`flex flex-col items-center justify-between h-full transition-transform duration-300 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0`}
-      >
-        <Link to="/" className="flex gap-3 items-center mt-4">
-          <img
-            src="/assets/icons/logo.svg"
-            alt="logo"
-            width={120}
-            height={36}
-          />
-        </Link>
 
-        {/* Main section icons */}
-        <div className="flex flex-col gap-4 flex-1 items-center mt-8">
-          <ul className="flex flex-col gap-4">
-            <Icon icon={MdHome} to="/" currentPath={location.pathname} />
-            <Icon icon={MdHotel} to="/hostel" currentPath={location.pathname} />
-            <Icon
-              icon={MdRestaurant}
-              to="/restaurant"
-              currentPath={location.pathname}
-            />
-          </ul>
+      <ul
+        className={`flex items-center justify-between w-full md:gap-6 md:bg-transparent ${
+          isOpen ? "block" : "hidden"
+        }`}
+      >
+        {/* Centered Links */}
+        <div className="flex justify-center flex-grow gap-6">
+          <Icon icon={MdHome} to="/" currentPath={location.pathname} />
+          <Icon icon={MdHotel} to="/hostel" currentPath={location.pathname} />
+          <Icon
+            icon={MdRestaurant}
+            to="/restaurant"
+            currentPath={location.pathname}
+          />
         </div>
 
-        {/* Bottom icons */}
-        <div className="flex flex-col gap-4 mb-4">
+        {/* Logout Button (Far Right) */}
+        <div className="ml-auto">
           <Icon icon={MdLogout} to="/logout" currentPath={location.pathname} />
         </div>
-      </div>
+      </ul>
     </nav>
   );
 };
@@ -70,14 +62,17 @@ const Icon = ({
   to: string;
   currentPath: string;
 }) => (
-  <li>
+  <li className="inline-block my-4 md:my-0">
     <Link
       to={to}
-      className={`${
+      className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md md:inline-block ${
         currentPath === to ? "text-blue-500" : "text-gray-400"
       } hover:text-blue-300 transition-colors duration-300`}
     >
-      <IconComponent size={30} />
+      <IconComponent size={24} />
+      <span className="hidden md:inline-block">
+        {to.replace("/", "") || "Home"}
+      </span>
     </Link>
   </li>
 );

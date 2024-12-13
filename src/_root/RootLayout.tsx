@@ -4,18 +4,17 @@ import { Outlet } from "react-router-dom";
 
 const RootLayout = () => {
   return (
-    <div className="w-full md:flex">
-      {/* Render Top Bar*/}
-      <Topbar />
-
-      {/* Render Side Bar */}
+    <div className="w-full h-full flex flex-col">
+      {/* Render Top Navigation Bar */}
       <NavBar />
 
-      <section className="flex flex-1 h-full">
-        <Outlet />
-      </section>
+      {/* Render Topbar (optional, depending on your design) */}
+      <Topbar />
 
-      {/* Render Bottom Bar */}
+      {/* Main Content Area */}
+      <main className="flex-1">
+        <Outlet />
+      </main>
     </div>
   );
 };

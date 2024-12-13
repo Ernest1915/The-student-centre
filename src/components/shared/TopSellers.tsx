@@ -8,11 +8,11 @@ const TopSellers = () => {
   ];
 
   return (
-    <div className=" p-4 bg-[rgba(24,24,24,0.6)] rounded-lg shadow-lg text-gray-100">
+    <div className=" p-4 bg-blue-500 rounded-lg shadow-lg text-gray-100">
       <h2 className="text-lg font-semibold mb-4">Top Buyers</h2>
       <table className="w-full text-left text-sm">
         <thead>
-          <tr className="border-b border-gray-700">
+          <tr className="border-b border-blue-300">
             <th className="p-2">Name</th>
             <th className="p-2">Account location</th>
           </tr>

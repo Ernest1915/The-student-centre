@@ -10,7 +10,7 @@
   }
 
   body {
-    @apply bg-dark-1 text-white min-h-screen font-inter;
+    @apply bg-white text-white min-h-screen font-inter;
   }
   :root {
     --background: 0 0% 100%;
@@ -272,13 +272,27 @@
 
   /* Left sidebar */
   .leftsidebar {
-    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-dark-2;
+    @apply hidden md:flex px-6 py-5 flex-col justify-between min-w-[270px] bg-dark-2;
   }
 
-  .newsidebar {
-    @apply hidden md:flex px-4 py-6 flex-col justify-between min-w-[200px];
-    background-color: rgba(24, 24, 24, 0.8);
-    height: 100%;
+  .newnavbar {
+    @apply w-full shadow-md bg-[rgba(24,24,24,0.8)] text-white flex justify-between px-6 py-2;
+  }
+
+  .newnavbar ul {
+    @apply md:static md:flex md:gap-6 hidden absolute top-full left-0 w-full  text-center;
+  }
+
+  .newnavbar ul.md {
+    @apply bg-transparent flex gap-6 w-auto;
+  }
+
+  .newnavbar li {
+    @apply inline-block my-4 md:my-0;
+  }
+
+  .newnavbar button {
+    @apply md:hidden;
   }
 
   .leftsidebar-link {

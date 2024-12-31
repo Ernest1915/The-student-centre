@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { databases, appwriteConfig } from "../../lib/appwrite/config"; 
 import { Models } from "appwrite";
+// this is the trends page , I am trying to connect the appwrite collection to this it seems no errors but i am failing to past
 
 const Trends = () => {
   const [content, setContent] = useState("");
@@ -15,15 +16,15 @@ const Trends = () => {
 
     try {
       const response = await databases.createDocument(
-        appwriteConfig.databaseId, // Database ID
-        appwriteConfig.TrendsCollectionId, // Trends Collection ID
-        "unique()", // Auto-generate unique ID
-        { content } // Match schema with the required field
+        appwriteConfig.databaseId, 
+        appwriteConfig.TrendsCollectionId, 
+        "unique()", 
+        { content } 
       );
 
       console.log("Trend posted:", response);
       setSuccess("Trend posted successfully!");
-      setContent(""); // Clear the input field
+      setContent(""); 
       fetchTrends(); 
     } catch (err: any) {
       console.error("Error posting trend:", err);

@@ -1,27 +1,14 @@
 import { Client, Account, Databases, Storage, Avatars } from "appwrite";
 
-// Define the structure of the appwriteConfig object
-interface AppwriteConfig {
-  projectId: string;
-  url: string;
-  databaseId: string;
-  userCollectionId: string;
-  cafeteriaCollectionId: string;
-  hostelsCollectionId: string;
-  universityCollectionId: string;
-  locationCollectionId: string;
-  TrendsCollectionId: string;
-}
-
-// Explicitly type the configuration object
-export const appwriteConfig: AppwriteConfig = {
+export const appwriteConfig = {
   projectId: import.meta.env.VITE_APPWRITE_PROJECT_ID,
   url: import.meta.env.VITE_APPWRITE_URL,
   databaseId: import.meta.env.VITE_APPWRITE_DATABASE_ID,
   userCollectionId: import.meta.env.VITE_APPWRITE_USER_COLLECTION_ID,
   cafeteriaCollectionId: import.meta.env.VITE_APPWRITE_CAFETERIAS_COLLECTION_ID,
   hostelsCollectionId: import.meta.env.VITE_APPWRITE_HOSTELS_COLLECTION_ID,
-  universityCollectionId: import.meta.env.VITE_APPWRITE_UNIVERSITIES_COLLECTION_ID,
+  universityCollectionId: import.meta.env
+    .VITE_APPWRITE_UNIVERSITIES_COLLECTION_ID,
   locationCollectionId: import.meta.env.VITE_APPRIWTE_LOCATION_COLLECTION_ID,
   TrendsCollectionId: import.meta.env.VITE_APPRIWITE_TRENDS_COLLECTION_ID,
 };

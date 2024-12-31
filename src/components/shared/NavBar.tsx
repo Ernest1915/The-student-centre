@@ -5,7 +5,8 @@ import {
   MdRestaurant,
   MdLogout,
   MdMenu,
-} from "react-icons/md";
+  MdTrendingUp,
+} from "react-icons/md"; // Import Trends Icon
 import { useState } from "react";
 import { IconType } from "react-icons/lib";
 
@@ -40,6 +41,11 @@ const NavBar = () => {
           <Icon
             icon={MdRestaurant}
             to="/restaurant"
+            currentPath={location.pathname}
+          />
+          <Icon
+            icon={MdTrendingUp} // Trends Icon
+            to="/Trends" // Trends Route
             currentPath={location.pathname}
           />
         </div>

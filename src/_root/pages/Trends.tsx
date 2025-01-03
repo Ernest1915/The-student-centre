@@ -50,23 +50,21 @@ const Trends = () => {
 
   const handleNewTrend = (media: File | null, caption: string) => {
     if (media) {
-      // You can create an object for the new trend, with the media URL and caption.
-      const mediaUrl = URL.createObjectURL(media); // Assuming you are uploading the media as a file
+      const mediaUrl = URL.createObjectURL(media);
       setTrends([
         {
-          id: trends.length + 1, // New trend ID
-          name: caption, // Use caption as the name
-          media: mediaUrl, // Set the media URL (converted from File)
+          id: trends.length + 1,
+          name: caption,
+          media: mediaUrl,
         },
         ...trends,
       ]);
     } else {
-      // Handle case where no media was provided (you can set a default media URL or handle it as needed)
       setTrends([
         {
-          id: trends.length + 1, // New trend ID
-          name: caption, // Use caption as the name
-          media: "https://via.placeholder.com/150", // Default placeholder image if no media provided
+          id: trends.length + 1,
+          name: caption,
+          media: "https://via.placeholder.com/150",
         },
         ...trends,
       ]);
@@ -153,13 +151,13 @@ const Trends = () => {
           <div className="flex flex-col items-end mr-16 space-y-2">
             <button
               className="bg-white text-blue-600 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-blue-100"
-              onClick={() => setIsTrendModalOpen(true)} // Open the Trend modal
+              onClick={() => setIsTrendModalOpen(true)}
             >
               Add Trend
             </button>
             <button
               className="bg-white text-blue-600 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-blue-100"
-              onClick={() => setIsPostModalOpen(true)} // Open the Post modal
+              onClick={() => setIsPostModalOpen(true)}
             >
               Add Post
             </button>

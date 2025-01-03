@@ -9,7 +9,14 @@ import LoginForm from "./_auth/forms/LoginForm.tsx";
 import SignUpForm from "./_auth/forms/SignUpForm.tsx";
 import RootLayout from "./_root/RootLayout.tsx";
 
-import { Home, Hostel, Restaurant, Trends } from "./_root/pages";
+import {
+  Home,
+  Hostel,
+  Restaurant,
+  Trends,
+  AddPost,
+  AddTrend,
+} from "./_root/pages";
 
 const App = () => {
   return (
@@ -26,7 +33,9 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/hostel" element={<Hostel />} />
           <Route path="/restaurant" element={<Restaurant />} />
-          <Route path="/Trends" element={<Trends/>}/>
+          <Route path="/Trends" element={<Trends />} />
+          <Route path="/addpost" element={<AddPost />} />
+          <Route path="/addtrend" element={<AddTrend />} />
         </Route>
       </Routes>
       <Toaster />

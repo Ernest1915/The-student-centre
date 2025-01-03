@@ -1,4 +1,5 @@
 import React from "react";
+import { Url } from "url";
 
 export type IContextType = {
   user: IUser;
@@ -27,7 +28,22 @@ export type IUser = {
   image_url: string;
   bio: string;
 };
+export type ICafeteria = {
+  id: number;
+  name: string;
+  cuisine: string;
+  priceRange: string;
+  rating: number;
+  image: string;
+  meals: Meal[];
 
+
+}
+export type Meal = {
+  id: number;
+  name: string;
+  price: number;
+}
 export type INewUser = {
   name: string;
   email: string;
@@ -65,3 +81,4 @@ export type IDataRow = {
 
 export type IRow = ICell[];
 export type IData = IRow[];
+

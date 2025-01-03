@@ -9,8 +9,9 @@ export const appwriteConfig = {
   hostelsCollectionId: import.meta.env.VITE_APPWRITE_HOSTELS_COLLECTION_ID,
   universityCollectionId: import.meta.env
     .VITE_APPWRITE_UNIVERSITIES_COLLECTION_ID,
-  locationCollectionId: import.meta.env.VITE_APPRIWTE_LOCATION_COLLECTION_ID,
-  TrendsCollectionId: import.meta.env.VITE_APPRIWITE_TRENDS_COLLECTION_ID,
+  locationCollectionId: import.meta.env.VITE_APPWRITE_LOCATION_COLLECTION_ID,
+  TrendsCollectionId: import.meta.env.VITE_APPWRITE_TRENDS_COLLECTION_ID,
+  OrdersCollectionId : import .meta.env.VITE_APPWRITE_ORDERS_COLLECTION_ID,
 };
 
 // Initialize the Appwrite client and services

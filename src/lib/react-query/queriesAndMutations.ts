@@ -5,6 +5,7 @@ import {
   SignOutAccount,
 } from "../appwrite/api";
 import { INewUser } from "@/types";
+import { useState, useEffect } from "react";
 
 export const useCreateUserAccount = () => {
   return useMutation({
@@ -23,4 +24,18 @@ export const useSignOutAccount = () => {
   return useMutation({
     mutationFn: SignOutAccount,
   });
+};
+
+export const useMediaQuery = (query: string) => {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const mediaQueryList = window.matchMedia(query);
+    const updateMatches = () => setMatches(mediaQueryList.matches);
+    mediaQueryList.addEventListener("change", updateMatches);
+    updateMatches();
+    return () => mediaQueryList.removeEventListener("change", updateMatches);
+  }, [query]);
+
+  return matches;
 };

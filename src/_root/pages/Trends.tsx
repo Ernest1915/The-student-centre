@@ -1,13 +1,14 @@
 import { FaCheckCircle, FaHeart, FaCommentDots } from "react-icons/fa";
+import { useState } from "react";
 
-const RTrends = () => {
-  const trends = [
-    { id: 1, media: "https://via.placeholder.com/150", name: "John Doe" },
-    { id: 2, media: "https://via.placeholder.com/150", name: "Jane Smith" },
-    { id: 3, media: "https://via.placeholder.com/150", name: "Alice Brown" },
-  ];
+import CredenzaModal from "@/components/forms/CredenzaModal";
+import CredenzaModalTrends from "@/components/forms/CredenzaModalTrends";
 
-  const posts = [
+const Trends = () => {
+  const [isFabHovered, setIsFabHovered] = useState(false);
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [isTrendModalOpen, setIsTrendModalOpen] = useState(false);
+  const [posts, setPosts] = useState([
     {
       id: 1,
       sender: "CITY DIGEST.",
@@ -24,10 +25,58 @@ const RTrends = () => {
       time: "2d",
       content: "This is a sample post!",
     },
-  ];
+  ]);
+
+  const [trends, setTrends] = useState([
+    { id: 1, media: "https://via.placeholder.com/150", name: "John Doe" },
+    { id: 2, media: "https://via.placeholder.com/150", name: "Jane Smith" },
+    { id: 3, media: "https://via.placeholder.com/150", name: "Alice Brown" },
+  ]);
+
+  const handleNewPost = (postContent: string) => {
+    setPosts([
+      {
+        id: posts.length + 1,
+        sender: "You",
+        username: "@yourusername",
+        verified: false,
+        time: "Just Now",
+        content: postContent,
+      },
+      ...posts,
+    ]);
+    setIsPostModalOpen(false); // Close the post modal after posting
+  };
+
+  const handleNewTrend = (media: File | null, caption: string) => {
+    if (media) {
+      // You can create an object for the new trend, with the media URL and caption.
+      const mediaUrl = URL.createObjectURL(media); // Assuming you are uploading the media as a file
+      setTrends([
+        {
+          id: trends.length + 1, // New trend ID
+          name: caption, // Use caption as the name
+          media: mediaUrl, // Set the media URL (converted from File)
+        },
+        ...trends,
+      ]);
+    } else {
+      // Handle case where no media was provided (you can set a default media URL or handle it as needed)
+      setTrends([
+        {
+          id: trends.length + 1, // New trend ID
+          name: caption, // Use caption as the name
+          media: "https://via.placeholder.com/150", // Default placeholder image if no media provided
+        },
+        ...trends,
+      ]);
+    }
+
+    setIsTrendModalOpen(false); // Close the modal after adding the trend
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 p-4">
+    <div className="min-h-screen bg-white p-4">
       {/* Trends Section */}
       <section className="mb-6">
         <h2 className="text-xl font-bold text-blue-700 mb-4">Trends</h2>
@@ -94,15 +143,48 @@ const RTrends = () => {
         </div>
       </section>
 
-      {/* Floating Action Button */}
-      <button
-        className="fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700"
-        onClick={() => alert("Post something!")}
+      {/* Floating Action Button with Side Menu */}
+      <div
+        className="fixed bottom-4 right-4 flex items-center"
+        onMouseEnter={() => setIsFabHovered(true)}
+        onMouseLeave={() => setIsFabHovered(false)}
       >
-        +
-      </button>
+        {isFabHovered && (
+          <div className="flex flex-col items-end mr-16 space-y-2">
+            <button
+              className="bg-white text-blue-600 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-blue-100"
+              onClick={() => setIsTrendModalOpen(true)} // Open the Trend modal
+            >
+              Add Trend
+            </button>
+            <button
+              className="bg-white text-blue-600 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-blue-100"
+              onClick={() => setIsPostModalOpen(true)} // Open the Post modal
+            >
+              Add Post
+            </button>
+          </div>
+        )}
+        <button className="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700">
+          +
+        </button>
+      </div>
+
+      {/* Modal for Adding Post */}
+      <CredenzaModal
+        open={isPostModalOpen}
+        onClose={() => setIsPostModalOpen(false)}
+        onConfirm={handleNewPost}
+      />
+
+      {/* Modal for Adding Trend */}
+      <CredenzaModalTrends
+        open={isTrendModalOpen}
+        onClose={() => setIsTrendModalOpen(false)}
+        onConfirm={handleNewTrend}
+      />
     </div>
   );
 };
 
-export default RTrends;
+export default Trends;

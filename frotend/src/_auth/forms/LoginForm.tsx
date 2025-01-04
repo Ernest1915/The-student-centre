@@ -52,6 +52,11 @@ const SignInForm = () => {
     try {
       const session = await loginUser(values.email, values.password);
 
+      if (!session?.token) {
+        throw new Error("Invalid login response: Token is missing");
+      }
+
+      console.log(session?.token);
       localStorage.setItem("authToken", session.token);
 
       // Navigate to the homepage

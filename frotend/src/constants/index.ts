@@ -4,16 +4,16 @@ export const homeLinks = [
     label: "Home",
   },
   {
-    route: "/hotel",
-    label: "Hotel",
+    route: "/hostel",
+    label: "Hostel",
   },
   {
     route: "/restaurant",
     label: "Restaurant",
   },
   {
-    route: "/about",
-    label: "About Us",
+    route: "/Trends",
+    label: "Trends",
   },
   {
     route: "/about",

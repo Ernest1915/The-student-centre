@@ -56,8 +56,8 @@ const SignUpForm = () => {
         description: "You can now log in with your credentials.",
       });
       console.log("Redirecting");
-      // Redirect to home page
-      navigate("/");
+      // Redirect to login page
+      navigate("/login");
     } catch (error: any) {
       console.error(
         "Error creating account:",

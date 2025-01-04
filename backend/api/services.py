@@ -65,7 +65,17 @@ def get_current_user():
 
 def sign_out_account():
     try:
-        account.delete_session("current")
+        session = account.delete_session(session_id="current")
         return True
     except Exception as e:
+        print(f"Sign-out error: {str(e)}")  # Log detailed error
         raise e
+
+def check_active_session(token):
+    try:
+        session = account.get_session(token)  # Replace with actual token validation
+        return session and session["$id"] == token
+    except Exception as e:
+        print("Session validation error:", e)
+        return None
+

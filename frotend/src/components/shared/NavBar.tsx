@@ -1,4 +1,6 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation, NavLink } from "react-router-dom";
+import { Button } from "../ui/button";
+import { useState } from "react";
 import {
   MdHome,
   MdHotel,
@@ -6,56 +8,150 @@ import {
   MdLogout,
   MdMenu,
   MdTrendingUp,
-} from "react-icons/md"; // Import Trends Icon
-import { useState } from "react";
-import { IconType } from "react-icons/lib";
+} from "react-icons/md";
+import { IHomeLink } from "@/types";
+import { homeLinks } from "@/constants";
 
-const NavBar = () => {
+const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
   const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
+
+  const signOut = async () => {
+    try {
+      // Retrieve the token from local storage or other secure storage
+      const token = localStorage.getItem("authToken");
+      console.log(token);
+      if (!token) {
+        throw new Error("No token found. User might already be signed out.");
+      }
+
+      const response = await fetch("http://127.0.0.1:8000/api/sign-out/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        const errorMessage =
+          errorData?.error || response.statusText || "Unknown error occurred";
+        console.error("Sign-out failed:", {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorData,
+        });
+
+        throw new Error(
+          `Sign-out failed: ${errorMessage} (Status: ${response.status})`
+        );
+      }
+
+      console.log("Sign-out successful:", await response.json());
+
+      // Clear token and user data from local storage on successful sign-out
+      localStorage.removeItem("authToken");
+      navigate("/login"); // Redirect to the login page
+    } catch (error: any) {
+      console.error("Error signing out:", error.message || error);
+      alert(`Sign-out failed: ${error.message || "Unknown error occurred"}`);
+    }
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+  };
 
   return (
-    <nav className="newnavbar text-white flex items-center justify-between px-6 py-4 shadow-md">
-      {/* Logo */}
-      <Link to="/" className="flex items-center">
-        <img src="/assets/icons/logo.svg" alt="logo" width={120} height={36} />
-      </Link>
-
-      {/* Mobile Menu Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="text-white md:hidden"
-      >
-        <MdMenu size={30} />
-      </button>
-
-      <ul
-        className={`flex items-center justify-between w-full md:gap-6 md:bg-transparent ${
-          isOpen ? "block" : "hidden"
-        }`}
-      >
-        {/* Centered Links */}
-        <div className="flex justify-center flex-grow gap-6">
-          <Icon icon={MdHome} to="/" currentPath={location.pathname} />
-          <Icon icon={MdHotel} to="/hostel" currentPath={location.pathname} />
-          <Icon
-            icon={MdRestaurant}
-            to="/restaurant"
-            currentPath={location.pathname}
+    <>
+      {/* Navbar for large screens */}
+      <nav className="newnavbar text-white flex items-center justify-between px-6 py-4 shadow-md md:flex">
+        <Link to="/" className="flex items-center">
+          <img
+            src="/assets/icons/logo.svg"
+            alt="logo"
+            width={120}
+            height={36}
+            className="hidden md:block"
           />
-          <Icon
-            icon={MdTrendingUp} // Trends Icon
-            to="/Trends" // Trends Route
-            currentPath={location.pathname}
-          />
+        </Link>
+
+        <ul className="flex items-center justify-between w-full md:gap-6 md:bg-transparent">
+          <div className="flex justify-center flex-grow gap-6">
+            <Icon icon={MdHome} to="/" currentPath={location.pathname} />
+            <Icon icon={MdHotel} to="/hostel" currentPath={location.pathname} />
+            <Icon
+              icon={MdRestaurant}
+              to="/restaurant"
+              currentPath={location.pathname}
+            />
+            <Icon
+              icon={MdTrendingUp}
+              to="/Trends"
+              currentPath={location.pathname}
+            />
+          </div>
+
+          <div className="ml-auto">
+            <Button
+              variant="ghost"
+              className="shad-button_ghost"
+              onClick={signOut}
+            >
+              <MdLogout />
+            </Button>
+          </div>
+        </ul>
+      </nav>
+
+      {/* Navbar for small screens */}
+      <header className="w-full md:hidden">
+        <div className="flex justify-between items-center py-4 px-5 bg-[rgba(24,24,24,0.6)] shadow">
+          <Link to="/" className="flex gap-3 items-center">
+            <img
+              src="/assets/icons/logo.svg"
+              alt="logo"
+              width={130}
+              height={36}
+              className="md:hidden"
+            />
+          </Link>
+
+          <div className="flex items-center">
+            <button onClick={toggleMenu} className="md:hidden">
+              <MdMenu size={30} />
+            </button>
+            <div className="flex gap-4 items-center ml-4">
+              <Button
+                variant="ghost"
+                className="shad-button_ghost"
+                onClick={signOut}
+              >
+                <MdLogout />
+              </Button>
+            </div>
+          </div>
         </div>
 
-        {/* Logout Button (Far Right) */}
-        <div className="ml-auto">
-          <Icon icon={MdLogout} to="/logout" currentPath={location.pathname} />
-        </div>
-      </ul>
-    </nav>
+        {menuOpen && (
+          <ul className="md:hidden flex flex-col gap-2 px-5 py-5 bg-[rgba(24,24,24,0.6)] shadow-lg absolute right-0 z-50">
+            {homeLinks.map((link: IHomeLink) => (
+              <li key={link.label} className="text-white">
+                <NavLink
+                  to={link.route}
+                  className="block p-2 hover:bg-blue-500"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        )}
+      </header>
+    </>
   );
 };
 
@@ -63,10 +159,12 @@ const Icon = ({
   icon: IconComponent,
   to,
   currentPath,
+  onClick,
 }: {
-  icon: IconType;
+  icon: any;
   to: string;
   currentPath: string;
+  onClick?: () => void;
 }) => (
   <li className="inline-block my-4 md:my-0">
     <Link
@@ -74,6 +172,7 @@ const Icon = ({
       className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md md:inline-block ${
         currentPath === to ? "text-blue-500" : "text-gray-400"
       } hover:text-blue-300 transition-colors duration-300`}
+      onClick={onClick}
     >
       <IconComponent size={24} />
       <span className="hidden md:inline-block">
@@ -83,4 +182,4 @@ const Icon = ({
   </li>
 );
 
-export default NavBar;
+export default Navbar;

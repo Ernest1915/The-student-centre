@@ -2,8 +2,11 @@ from appwrite.client import Client
 from appwrite.services.account import Account
 from appwrite.services.databases import Databases
 from appwrite.services.avatars import Avatars
+from appwrite.services.storage import Storage
+from appwrite.services.users import Users
+from appwrite.input_file import InputFile
 
-
+import io
 import base64
 # Initialize Appwrite Client
 client = Client()
@@ -15,7 +18,17 @@ client.set_key("standard_07132112c64318970f25e1217886a94a852355aaa9e9faf88523b68
 account = Account(client)
 databases = Databases(client)
 avatars = Avatars(client)
+storage = Storage(client)
+users = Users(client)
 
+PROJECT_ID = "6734735b002ac0f32e0e"
+DATABASE_ID = "673475070005e52b6927"
+USERS_COLLECTION_ID = "6734853c000fc40ad8ab"
+TRENDS_COLLECTION_ID = "6772e0af0004396e4dd9"
+BUCKET_ID = "677adde700173b1e19ed"
+
+
+# users 
 def create_user_account(user):
     try:
         new_account = account.create("unique()", user["email"], user["password"], user["name"])
@@ -38,16 +51,20 @@ def save_user_to_db(user):
             "unique()",
             user,
         )
+        
         return new_user
     except Exception as e:
         raise e
 
 def sign_in_account(user):
     try:
+        # Authenticate user using email and password
         session = account.create_email_password_session(user["email"], user["password"])
+
+        # Return session data including the session token
         return session
     except Exception as e:
-        raise e
+        raise Exception(f"Sign-in failed: {str(e)}")
 
 def get_current_user():
     try:
@@ -62,20 +79,75 @@ def get_current_user():
         return current_user["documents"][0]
     except Exception as e:
         raise e
+      
 
 def sign_out_account():
     try:
         session = account.delete_session(session_id="current")
         return True
     except Exception as e:
-        print(f"Sign-out error: {str(e)}")  # Log detailed error
+        print(f"Sign-out error: {str(e)}")  
         raise e
 
 def check_active_session(token):
     try:
-        session = account.get_session(token)  # Replace with actual token validation
+        session = account.get_session(token)  
         return session and session["$id"] == token
     except Exception as e:
         print("Session validation error:", e)
         return None
 
+
+#trends
+
+def upload_media_to_bucket(media_file):
+    try:
+        print("Uploading result ...")
+        media_content = media_file.read()
+        filename = media_file.name
+        media_file = InputFile.from_bytes(media_content, filename)
+        upload_result = storage.create_file(BUCKET_ID, "unique()", media_file)
+        print("File created")
+        return upload_result["$id"]  # Return file ID as media URL
+    except Exception as e:
+        raise Exception(f"Failed to upload media: {str(e)}")
+
+def create_trend_document(data):
+    try:
+        trend = databases.create_document(DATABASE_ID, TRENDS_COLLECTION_ID, "unique()", data)
+        return trend
+    except Exception as e:
+        raise Exception(f"Failed to create trend document: {str(e)}")
+
+def fetch_trends():
+    """
+    Fetch trends from the database and reconstruct the media URL properly.
+    """
+    try:
+        trends = databases.list_documents(DATABASE_ID, TRENDS_COLLECTION_ID)
+        
+
+        sorted_trends = sorted(
+            trends["documents"], key=lambda x: x.get("created_at", ""), reverse=True
+        )
+
+
+        for trend in sorted_trends:
+            media_id = trend.get("media_url")  
+            
+            if media_id:
+   
+                media_url = f"https://cloud.appwrite.io/v1/storage/buckets/{BUCKET_ID}/files/{media_id}/preview?project={PROJECT_ID}"
+                trend["media_url"] = media_url  
+
+        return sorted_trends
+
+    except Exception as e:
+        raise Exception(f"Failed to fetch trends: {str(e)}")
+
+
+def delete_trend_document(trend_id):
+    try:
+        databases.delete_document(DATABASE_ID, TRENDS_COLLECTION_ID, trend_id)
+    except Exception as e:
+        raise Exception(f"Failed to delete trend document: {str(e)}")

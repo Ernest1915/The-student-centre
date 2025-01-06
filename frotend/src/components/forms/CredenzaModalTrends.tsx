@@ -13,7 +13,7 @@ import { useState } from "react";
 type CredenzaModalTrendProps = {
   open: boolean;
   onClose: () => void;
-  onConfirm: (media: File | null, caption: string) => void; // Pass the media and caption to the parent component
+  onConfirm: (media: File | null, caption: string, location: string) => void; // Include location in the onConfirm function
 };
 
 const CredenzaModalTrend = ({
@@ -23,9 +23,10 @@ const CredenzaModalTrend = ({
 }: CredenzaModalTrendProps) => {
   const { toast } = useToast();
 
-  // State to hold the caption and media
+  // State to hold the caption, media, and location
   const [caption, setCaption] = useState<string>("");
   const [media, setMedia] = useState<File | null>(null);
+  const [location, setLocation] = useState<string>(""); // New state for location
 
   const handleMediaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
@@ -37,19 +38,20 @@ const CredenzaModalTrend = ({
   const handleConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent default button action (if any)
 
-    if (!media || !caption) {
+    if (!media || !caption || !location) {
       return toast({
-        title: "Please provide a media file and caption.",
+        title: "Please provide a media file, caption, and location.",
         variant: "destructive",
       });
     }
 
-    // Pass the media and caption to the parent component
-    onConfirm(media, caption);
+    // Pass the media, caption, and location to the parent component
+    onConfirm(media, caption, location);
 
     // Clear the content after submission
     setMedia(null);
     setCaption("");
+    setLocation("");
     toast({ title: "Trend posted successfully" });
   };
 
@@ -58,7 +60,10 @@ const CredenzaModalTrend = ({
       <CredenzaContent>
         <CredenzaHeader>
           <CredenzaTitle>Create a New Trend</CredenzaTitle>
-          <p>Share your trend with the community (image/video + caption)</p>
+          <p>
+            Share your trend with the community (image/video + caption +
+            location)
+          </p>
         </CredenzaHeader>
         <CredenzaBody>
           <div className="space-y-4">
@@ -78,6 +83,14 @@ const CredenzaModalTrend = ({
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
               rows={4}
+              className="w-full p-2 border rounded-md"
+            />
+            {/* Input for location */}
+            <input
+              type="text"
+              placeholder="Enter location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
               className="w-full p-2 border rounded-md"
             />
           </div>

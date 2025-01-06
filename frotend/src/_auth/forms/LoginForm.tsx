@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { LoginValidation } from "@/lib/validation";
 import Loader from "@/components/shared/Loader";
-import axios from "axios";
+import { SignInAccount } from "@/lib/appwrite/api";
 
 const SignInForm = () => {
   const { toast } = useToast();
@@ -32,18 +32,18 @@ const SignInForm = () => {
     },
   });
 
-  // Function to handle login API call
   async function loginUser(email: string, password: string) {
     try {
-      const response = await axios.post(" http://127.0.0.1:8000/api/sign-in/", {
-        email,
-        password,
-      });
+      const session = await SignInAccount({ email, password });
 
-      return response.data;
+      if (!session || !session.$id) {
+        throw new Error("Login failed: Token is missing");
+      }
+
+      return session;
     } catch (error: any) {
       const errorMessage =
-        error.response?.data?.error || "An error occurred. Please try again.";
+        error.message || "An error occurred. Please try again.";
       throw new Error(errorMessage);
     }
   }
@@ -52,16 +52,15 @@ const SignInForm = () => {
     try {
       const session = await loginUser(values.email, values.password);
 
-      if (!session?.token) {
+      if (!session || !session.$id) {
         throw new Error("Invalid login response: Token is missing");
       }
 
-      console.log(session?.token);
-      localStorage.setItem("authToken", session.token);
+      localStorage.setItem("authToken", session.$id);
 
-      // Navigate to the homepage
       form.reset();
       navigate("/");
+
       toast({ title: "Login successful" });
     } catch (error: any) {
       toast({ title: error.message });

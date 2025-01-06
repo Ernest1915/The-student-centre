@@ -79,6 +79,14 @@ export type IDataRow = {
   interest: number;
 };
 
+export type ITrend = {
+  user_id: string;
+  user_name: string;
+  location: string;
+  caption: string;
+  media_url: string;
+};
+
 export type IRow = ICell[];
 export type IData = IRow[];
 

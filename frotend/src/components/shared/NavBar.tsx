@@ -11,49 +11,36 @@ import {
 } from "react-icons/md";
 import { IHomeLink } from "@/types";
 import { homeLinks } from "@/constants";
+import { SignOutAccount } from "@/lib/appwrite/api";
+import { useToast } from "@/hooks/use-toast";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { toast } = useToast();
 
   const signOut = async () => {
     try {
-      // Retrieve the token from local storage or other secure storage
       const token = localStorage.getItem("authToken");
-      console.log(token);
+
       if (!token) {
         throw new Error("No token found. User might already be signed out.");
       }
 
-      const response = await fetch("http://127.0.0.1:8000/api/sign-out/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Include the token in the Authorization header
-        },
-      });
+      const session = await SignOutAccount();
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => null);
-        const errorMessage =
-          errorData?.error || response.statusText || "Unknown error occurred";
-        console.error("Sign-out failed:", {
-          status: response.status,
-          statusText: response.statusText,
-          error: errorData,
-        });
-
-        throw new Error(
-          `Sign-out failed: ${errorMessage} (Status: ${response.status})`
-        );
+      if (!session) {
+        throw new Error("Sign-out failed, session not deleted.");
       }
 
-      console.log("Sign-out successful:", await response.json());
+      console.log("Sign-out successful:", session);
 
-      // Clear token and user data from local storage on successful sign-out
       localStorage.removeItem("authToken");
-      navigate("/login"); // Redirect to the login page
+
+      navigate("/login");
+
+      toast({ title: "Successfully signed out!" });
     } catch (error: any) {
       console.error("Error signing out:", error.message || error);
       alert(`Sign-out failed: ${error.message || "Unknown error occurred"}`);

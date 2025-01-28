@@ -57,7 +57,7 @@ const SignUpForm = () => {
       });
       console.log("Redirecting");
       // Redirect to login page
-      navigate("/login");
+      navigate("/");
     } catch (error: any) {
       console.error(
         "Error creating account:",

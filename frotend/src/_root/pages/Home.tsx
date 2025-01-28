@@ -1,7 +1,9 @@
 import ListingCard from "@/components/shared/ListingCard";
 import Search from "@/components/shared/Search";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   const listings = [
     {
       title: "Hostel A",
@@ -44,7 +46,12 @@ const Home = () => {
           <p className="mt-4 text-xl">
             Find the best hostels and cafeterias near your university with ease.
           </p>
-          <button className="mt-6 px-6 py-3 bg-white text-blue-500 font-bold rounded-lg shadow hover:bg-blue-100 transition">
+          <button
+            className="mt-6 px-6 py-3 bg-white text-blue-500 font-bold rounded-lg shadow hover:bg-blue-100 transition"
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
             Get Started
           </button>
         </div>

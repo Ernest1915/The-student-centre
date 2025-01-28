@@ -15,6 +15,7 @@ from api.services import (
     create_trend_document,
     fetch_trends,
     delete_trend_document,
+    fetch_cafeterias,
 
     users,
     BUCKET_ID,
@@ -181,3 +182,10 @@ def refresh_trends(request):
         return Response(trends, status=200)
     except Exception as e:
         return Response({"error": str(e)}, status=400)
+@api_view(["GET"])    
+def get_cafes(request):
+    try:
+        cafes = fetch_cafeterias()
+        return Response(cafes, status=200)
+    except Exception as e:
+        return Response({"error": str(e)}, status=400)   

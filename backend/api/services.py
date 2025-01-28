@@ -25,6 +25,7 @@ PROJECT_ID = "6734735b002ac0f32e0e"
 DATABASE_ID = "673475070005e52b6927"
 USERS_COLLECTION_ID = "6734853c000fc40ad8ab"
 TRENDS_COLLECTION_ID = "6772e0af0004396e4dd9"
+CAFETERIAS_COLLECTION_ID = '673486cb003b014077a8'
 BUCKET_ID = "677adde700173b1e19ed"
 
 
@@ -151,3 +152,27 @@ def delete_trend_document(trend_id):
         databases.delete_document(DATABASE_ID, TRENDS_COLLECTION_ID, trend_id)
     except Exception as e:
         raise Exception(f"Failed to delete trend document: {str(e)}")
+# Cafeterias 
+def create_cafeteria_document(data):
+    try: 
+        cafeteria = databases.create_document(DATABASE_ID, CAFETERIAS_COLLECTION_ID, "unique()", data)
+        return cafeteria
+    except  Exception as e:
+        raise Exception(f"Failednto create cafeteria document: {str(e)}")
+def fetch_cafeterias():
+    try:
+        # Fetch cafeterias from the database
+        cafeterias = databases.list_documents(DATABASE_ID, CAFETERIAS_COLLECTION_ID)
+        
+        # Sort the cafeterias by the 'created_at' field in descending order
+        sorted_cafeterias = sorted(
+            cafeterias["documents"], key=lambda x: x.get("created_at", ""), reverse=True
+        )
+        
+        # Return the sorted list
+        return sorted_cafeterias
+    
+    except Exception as e:
+        # Handle any errors and raise a new exception with a descriptive message
+        raise Exception(f"Failed to fetch cafeterias: {str(e)}")
+    

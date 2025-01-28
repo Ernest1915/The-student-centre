@@ -2,6 +2,7 @@ import { useState } from "react";
 import { databases, account, appwriteConfig } from "@/lib/appwrite/config";
 import { useNavigate } from "react-router-dom";
 import { ICafeteria, Meal } from "@/types/index";
+import axios from "axios";
 
 const Cafeteria = () => {
   const [selectedCafeteria, setSelectedCafeteria] = useState<ICafeteria | null>(null);

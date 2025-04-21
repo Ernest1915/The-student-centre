@@ -86,6 +86,13 @@ export type ITrend = {
   caption: string;
   media_url: string;
 };
+export type IHostel = {
+  $id: string;
+  name: string;
+  availability: string;
+  package: string;
+};
+
 
 export type IRow = ICell[];
 export type IData = IRow[];

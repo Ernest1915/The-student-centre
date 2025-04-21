@@ -1,46 +1,31 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
-const HostelCard = () => {
-  const hostels = [
-    {
-      image: "",
-      name: "A",
-      desc: "",
-    },
-    {
-      image: "",
-      name: "B",
-      desc: "",
-    },
-    {
-      image: "",
-      name: "C",
-      desc: "",
-    },
-    // Add more dummy hostels as needed
-  ];
+type HostelCardProps = {
+  hostel: {
+    id: string;
+    Name: string;
+    Availability: boolean;
+    package: string;
+  };
+};
 
+const HostelCard = ({ hostel }: HostelCardProps) => {
   return (
-    <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-2">
-      {hostels.map((htl, index) => (
-        <Card
-          key={index}
-          className="bg-blue-500 p-4 rounded-lg shadow-lg text-gray-100"
+    <Card className="transition-shadow hover:shadow-md">
+      <CardHeader>
+        <CardTitle>{hostel.Name}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p
+          className={`text-sm font-medium ${
+            hostel.Availability ? "text-green-600" : "text-red-500"
+          }`}
         >
-          <CardHeader className="flex flex-col items-start">
-            <CardTitle className="text-sm font-semibold">{htl.name}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm">
-              <strong>Image:</strong> {htl.image}
-            </p>
-            <p className="text-sm">
-              <strong>Desc:</strong> {htl.desc}
-            </p>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
+          {hostel.Availability ? "Available" : "Not Available"}
+        </p>
+        <p className="mt-2 font-bold text-gray-800">Package: {hostel.package}</p>
+      </CardContent>
+    </Card>
   );
 };
 

@@ -27,6 +27,7 @@ USERS_COLLECTION_ID = "6734853c000fc40ad8ab"
 TRENDS_COLLECTION_ID = "6772e0af0004396e4dd9"
 CAFETERIAS_COLLECTION_ID = '673486cb003b014077a8'
 BUCKET_ID = "677adde700173b1e19ed"
+HOSTELS_ID = "673475d4000551dcc003"
 
 
 # users 
@@ -161,7 +162,7 @@ def create_cafeteria_document(data):
         raise Exception(f"Failednto create cafeteria document: {str(e)}")
 def fetch_cafeterias():
     try:
-        # Fetch cafeterias from the database
+        
         cafeterias = databases.list_documents(DATABASE_ID, CAFETERIAS_COLLECTION_ID)
         
         # Sort the cafeterias by the 'created_at' field in descending order
@@ -175,4 +176,17 @@ def fetch_cafeterias():
     except Exception as e:
         # Handle any errors and raise a new exception with a descriptive message
         raise Exception(f"Failed to fetch cafeterias: {str(e)}")
+def fetch_Hostels():
+    try:
+        hostels = databases.list_documents(DATABASE_ID, HOSTELS_ID)
+        sorted_hostels = sorted (
+            hostels["documents"], key=lambda x: x.get("created_at" , ""), reverse=True
+
+        )
+        return sorted_hostels
+    except Exception as e:
+        
+        raise Exception(f"Failed to fetch hostels: {str(e)}")
+    
+
     

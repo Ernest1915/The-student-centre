@@ -29,13 +29,14 @@ export type IUser = {
   bio: string;
 };
 export type ICafeteria = {
-  id: number;
+  id: string;
   name: string;
   cuisine: string;
-  priceRange: string;
+  price_range: string;
   rating: number;
-  image: string;
-  meals: Meal[];
+  cafe_image: string;
+
+  
 
 
 }

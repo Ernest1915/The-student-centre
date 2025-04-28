@@ -94,6 +94,16 @@ export type IHostel = {
   package: string;
 };
 
+export type HostelType = {
+  id: string;
+  name: string;
+  availability: boolean;
+  package: string;
+  image?: string;
+  location?: string;
+  description?: string;
+};
+
 
 export type IRow = ICell[];
 export type IData = IRow[];

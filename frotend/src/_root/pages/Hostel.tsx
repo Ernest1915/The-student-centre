@@ -1,16 +1,10 @@
 import { useEffect, useState } from "react";
 import HostelCard from "@/components/shared/HostelCard";
 import Search from "@/components/shared/Search";
+import { HostelType } from "@/types";
+import { Link } from "react-router-dom";
 
-type HostelType = {
-  id: string;
-  Name: string;
-  Availability: boolean;
-  package: string;
-  image?: string;
-  location?: string;
-  description?: string;
-};
+
 
 const Hostel = () => {
   const [hostels, setHostels] = useState<HostelType[]>([]);
@@ -46,9 +40,12 @@ const Hostel = () => {
         ) : (
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {hostels.map((hostel) => (
-              <HostelCard key={hostel.id} hostel={hostel} />
+              <Link key={hostel.id} to={`/hostel/${hostel.id}`}>
+                <HostelCard hostel={hostel} />
+              </Link>
             ))}
           </div>
+
         )}
       </div>
     </div>

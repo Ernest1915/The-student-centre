@@ -187,6 +187,11 @@ def fetch_Hostels():
     except Exception as e:
         
         raise Exception(f"Failed to fetch hostels: {str(e)}")
-    
+def get_hostel(hostel_id):
+    try:
+        hostel = databases.get_document(DATABASE_ID, HOSTELS_ID, hostel_id)
+        return hostel
+    except Exception as e:
+        raise Exception(f"Failed to fetch that hostel: {str(e)}")
 
     

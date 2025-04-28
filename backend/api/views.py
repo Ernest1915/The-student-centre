@@ -17,14 +17,17 @@ from api.services import (
     delete_trend_document,
     fetch_cafeterias,
     fetch_Hostels,
+    get_hostel,
 
     users,
     BUCKET_ID,
     PROJECT_ID
 )
-
+import logging
 # users 
 
+
+logger = logging.getLogger(__name__)
 
 @api_view(["POST"])
 def create_user(request):
@@ -195,5 +198,12 @@ def get_Hostels(request):
     try:
         hostels = fetch_Hostels()
         return Response ({"hostels" : hostels}, status = 200)
+    except Exception as e:
+        return Response({"error": str(e)}, status=400)
+def get_Hostel_By_Id(request , hostel_id):
+    try:
+        hostel = get_hostel(hostel_id) 
+        logger.info("Hostel Data: ", hostel)  
+        return Response(hostel, safe=False)
     except Exception as e:
         return Response({"error": str(e)}, status=400)

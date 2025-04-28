@@ -10,6 +10,7 @@ from api.views import (
     refresh_trends,
     get_Hostels,
     get_cafes,
+    get_Hostel_By_Id,
 )
 
 urlpatterns = [
@@ -29,6 +30,8 @@ urlpatterns = [
 
     #hostels management endpoints 
     path("get_Hostels/", get_Hostels, name="get_hostels"),
+    path("get_hostel/<str:hostel_id>/", get_Hostel_By_Id, name="get_Hostel_By_Id"),
+
 
     #cafeterias management endpoints
     path("get_cafes/", get_cafes , name="get_cafes")

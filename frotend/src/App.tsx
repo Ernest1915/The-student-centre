@@ -16,6 +16,8 @@ import {
   Trends,
   AddPost,
   AddTrend,
+  HostelDetails,
+  
 } from "./_root/pages";
 
 const App = () => {
@@ -36,6 +38,8 @@ const App = () => {
           <Route path="/Trends" element={<Trends />} />
           <Route path="/addpost" element={<AddPost />} />
           <Route path="/addtrend" element={<AddTrend />} />
+          <Route path="/hostel/:id" element={<HostelDetails/>} />
+          
         </Route>
       </Routes>
       <Toaster />

@@ -90,7 +90,7 @@ export type ITrend = {
 export type IHostel = {
   $id: string;
   name: string;
-  availability: string;
+  Availability: string;
   package: string;
 };
 

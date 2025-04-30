@@ -1,10 +1,16 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { HostelType } from "@/types";
 
 
-interface HostelCardProps {
-  hostel: HostelType;
-}
+
+type HostelCardProps = {
+  hostel: {
+    id: string;
+    name: string;
+    availability: boolean;
+    package: string;
+    
+  };
+};
 
 
 const HostelCard = ({hostel}: HostelCardProps) => {

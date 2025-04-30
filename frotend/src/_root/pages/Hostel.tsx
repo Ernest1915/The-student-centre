@@ -15,7 +15,10 @@ const Hostel = () => {
       try {
         const res = await fetch("http://127.0.0.1:8000/api/get_Hostels/");
         const data = await res.json();
-        setHostels(data.hostels || []);
+        console.log(data)
+        setHostels(data || []);
+
+        console.log(data)
       } catch (err) {
         console.error("Failed to fetch hostels", err);
       } finally {

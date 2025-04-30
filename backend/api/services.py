@@ -176,6 +176,12 @@ def fetch_cafeterias():
     except Exception as e:
         # Handle any errors and raise a new exception with a descriptive message
         raise Exception(f"Failed to fetch cafeterias: {str(e)}")
+def get_Cafeteria(cafeteria_id):
+    try:
+        cafeteria = databases.get_document(DATABASE_ID,CAFETERIAS_COLLECTION_ID, cafeteria_id)
+        return cafeteria
+    except Exception as e :
+        raise Exception(f"Failed to get that cafeteria: {str(e)}")        
 def fetch_Hostels():
     try:
         hostels = databases.list_documents(DATABASE_ID, HOSTELS_ID)

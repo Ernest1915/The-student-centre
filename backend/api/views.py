@@ -18,6 +18,7 @@ from api.services import (
     fetch_cafeterias,
     fetch_Hostels,
     get_hostel,
+    get_Cafeteria,
 
     users,
     BUCKET_ID,
@@ -190,9 +191,31 @@ def refresh_trends(request):
 def get_cafes(request):
     try:
         cafes = fetch_cafeterias()
-        return Response(cafes, status=200)
+
+        transformed = [
+            {
+                "id": cafe["$id"],  # Rename $id
+                "name": cafe.get("name"),
+                "cuisine": cafe.get("cuisine"),
+                "price_range": cafe.get("price_range"),
+                "created_at": cafe.get("created_at"),
+                # Add more fields if needed
+            }
+            for cafe in cafes
+        ]
+
+        return Response(transformed, status=200)
+
     except Exception as e:
-        return Response({"error": str(e)}, status=400)   
+        return Response({"error": str(e)}, status=400)
+
+@api_view(["GET"])
+def get_cafe(request, cafe_id):
+    try:
+        cafe =  get_Cafeteria(cafe_id)   
+        return Response(cafe, status=200) 
+    except Exception as e:
+        return Response({"error": str(e)}, status=400) 
 @api_view(["GET"])    
 def get_Hostels(request):
     try:

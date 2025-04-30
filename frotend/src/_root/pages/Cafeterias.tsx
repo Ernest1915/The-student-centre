@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { ICafeteria } from "@/types/index";
+import { Link } from "react-router-dom";
+
+
 import axios from "axios";
 import CafeteriaCard from "@/components/shared/cafeteriaCard";
 
@@ -13,6 +16,7 @@ const Cafeterias = () => {
         console.log("connecting ...")
         const response = await axios.get("http://localhost:8000/api/get_cafes/");
         console.log(response)
+        
         setCafeterias(response.data);
       } catch (error) {
         console.error("Failed to fetch cafeterias:", error);
@@ -27,7 +31,7 @@ const Cafeterias = () => {
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold mb-6">Cafeterias</h1>
-
+  
       {loading ? (
         <p className="text-gray-600">Loading cafeterias...</p>
       ) : cafeterias.length === 0 ? (
@@ -35,7 +39,9 @@ const Cafeterias = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {cafeterias.map((cafe) => (
-            <CafeteriaCard key={cafe.id} cafe={cafe} />
+            <Link to={`/cafeteria/${cafe.id}`} key={cafe.id} className="block">
+              <CafeteriaCard cafe={cafe} />
+            </Link>
           ))}
         </div>
       )}

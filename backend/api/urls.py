@@ -11,6 +11,8 @@ from api.views import (
     get_Hostels,
     get_cafes,
     get_Hostel_By_Id,
+    get_cafe,
+
 )
 
 urlpatterns = [
@@ -34,5 +36,6 @@ urlpatterns = [
 
 
     #cafeterias management endpoints
-    path("get_cafes/", get_cafes , name="get_cafes")
+    path("get_cafes/", get_cafes , name="get_cafes"),
+    path("get_cafe/<str:cafe_id>/", get_cafe , name="get_cafe")
 ]

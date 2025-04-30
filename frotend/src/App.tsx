@@ -17,6 +17,7 @@ import {
   AddPost,
   AddTrend,
   HostelDetails,
+  CafeteriaDetails,
   
 } from "./_root/pages";
 
@@ -39,6 +40,7 @@ const App = () => {
           <Route path="/addpost" element={<AddPost />} />
           <Route path="/addtrend" element={<AddTrend />} />
           <Route path="/hostel/:id" element={<HostelDetails/>} />
+          <Route path="/cafeteria/:id"element={<CafeteriaDetails/>}/>
           
         </Route>
       </Routes>

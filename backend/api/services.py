@@ -28,6 +28,7 @@ TRENDS_COLLECTION_ID = "6772e0af0004396e4dd9"
 CAFETERIAS_COLLECTION_ID = '673486cb003b014077a8'
 BUCKET_ID = "677adde700173b1e19ed"
 HOSTELS_ID = "673475d4000551dcc003"
+ROOMS_ID = "68133ff60006575cb26a"
 
 
 # users 
@@ -199,5 +200,9 @@ def get_hostel(hostel_id):
         return hostel
     except Exception as e:
         raise Exception(f"Failed to fetch that hostel: {str(e)}")
+    
+def get_rooms_for_hostel(hostel_id):
+    try:
+        rooms = databases.get_documents(DATABASE_ID , ROOMS_ID, hostel_id)   
 
     

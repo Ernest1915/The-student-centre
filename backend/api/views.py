@@ -222,7 +222,7 @@ def get_Hostels(request):
         hostels = fetch_Hostels()
         transformed = [
             {
-                "id": hostel["$id"], # similar list comprehension to formatt 
+                "id": hostel["$id"], #
                 "name": hostel.get("Name"),
                 "availability": hostel.get("Availability"),
                 "package": hostel.get("package"),
